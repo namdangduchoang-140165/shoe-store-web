@@ -1,16 +1,17 @@
 package com.huce.cafemanagement.model.entities.keys;
 
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.Column;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Embeddable
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode
 public class UserRoleKey {
-    private Integer userId;
+    @Column(name = "user_id")
+    private Long userId;
 
-    private Integer roleId;
+    @Column(name = "role_id")
+    private Long roleId;
 }
