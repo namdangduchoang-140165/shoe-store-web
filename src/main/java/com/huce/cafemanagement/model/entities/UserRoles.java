@@ -1,28 +1,38 @@
 package com.huce.cafemanagement.model.entities;
 
+import com.huce.cafemanagement.model.entities.keys.UserRoleKey;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.example.shopee_demo.model.entities.keys.UserRoleKey;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
 @NoArgsConstructor
 @Table(name = "user_roles")
-@IdClass(UserRoleKey.class)
 public class UserRoles {
-    @Id
-    @Column(name = "user_id")
-    private Integer userId;
+    @EmbeddedId
+    private UserRoleKey id;
 
-    @Id
-    @Column(name = "role_id")
-    private Integer roleId;
+    @MapsId("userId")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Users user;
+
+    @MapsId("roleId")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "role_id", nullable = false)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Roles role;
 
     @CreationTimestamp
-    @Column(name = "created_at")
-    private Timestamp createdAt;
+    @Column(name = "assigned_at", updatable = false)
+    private LocalDateTime assignedAt;
 }

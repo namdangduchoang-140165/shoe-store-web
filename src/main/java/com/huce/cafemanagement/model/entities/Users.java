@@ -3,10 +3,11 @@ package com.huce.cafemanagement.model.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -16,40 +17,35 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
-    @Column(name = "username")
-    private String username;
+    @Column(name = "full_name", nullable = false, length = 150)
+    private String fullName;
 
-    @Column(name = "password_hash")
-    private String passwordHash;
-
-    @Column(name = "email")
+    @Column(name = "email", nullable = false, unique = true, length = 150)
     private String email;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
+    @Column(name = "phone", length = 20)
+    private String phone;
 
-    @Column(name = "address_id")
-    private Integer addressId;
+    @Column(name = "password", nullable = false, length = 255)
+    @ToString.Exclude
+    private String password;
 
-    @Column(name = "status")
-    private String status;
+    @Column(name = "avatar", length = 255)
+    private String avatar;
 
-    @Column(name = "is_active")
-    private Boolean isActive;
+    @Column(name = "status", nullable = false, length = 30)
+    private String status = "active";
 
-    @Column(name = "last_login")
-    private Timestamp lastLogin;
-
-    @Column(name= "is_verified")
-    private Boolean isVerified;
+    @Column(name = "email_verified_at")
+    private LocalDateTime emailVerifiedAt;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp
     @Column(name = "updated_at")
-    private Timestamp updatedAt;
+    private LocalDateTime updatedAt;
 }
